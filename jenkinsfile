@@ -10,7 +10,7 @@ pipeline {
             }
         }
         stage('package') {
-            tool { 
+            tools { 
                jdk 'JDK_8'
             }
             steps {
