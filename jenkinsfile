@@ -14,7 +14,7 @@ pipeline {
                jdk 'JDK_8'
             }
             steps {
-                sh "mvn $(params.maven_prmt)"
+                sh "mvn ${params.maven_prmt}"
             }
         }
         stage(postbuild) {
