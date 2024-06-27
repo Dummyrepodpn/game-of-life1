@@ -1,15 +1,15 @@
 pipeline {
     agent { label 'UBUNTU_NODE1_JAVA' }
     triggers { pollSCM('H/5 * * * *') }
-    parameters { choice(name: 'maven_prmt', chioces: ['install', 'package'], description: 'testing') }
+    parameters { choice(name: 'maven_prmt', choices: ['install', 'package'], description: 'testing') }
     stages{
-        stage(vcn) {
+        stage('vcn') {
             steps {
-                git url: 'https://github.com/wakaleo/game-of-life.git'
+                git url: 'https://github.com/wakaleo/game-of-life.git',
                     branch: 'declarative'
             }
         }
-        stage(package) {
+        stage('package') {
             tool { 
                jdk 'JDK_8'
             }
@@ -17,19 +17,19 @@ pipeline {
                 sh "mvn ${params.maven_prmt}"
             }
         }
-        stage(postbuild) {
+        stage('postbuild') {
             steps {
                 archiveArtifacts artifacts: '**/target/gameoflife.war',
                                  onlyIfSuccessful: true
                 junit testResults: '**/surefire-reports/TEST-*.xml'
             }
         }
-        post {
-        success {
-            mail subject: "Jenkins Build of ${JOB_NAME} with id ${BUILD_ID} is success",
-                body: "Use this URL ${BUILD_URL} for more info",
-                to: 'deepanmerd@gmail.com'
-            }
+    }    
+    post {
+    success {
+        mail subject: "Jenkins Build of ${JOB_NAME} with id ${BUILD_ID} is success",
+            body: "Use this URL ${BUILD_URL} for more info",
+            to: 'deepanmerd@gmail.com'
         }
     }
 }
