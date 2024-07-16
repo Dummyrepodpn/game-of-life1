@@ -1,5 +1,5 @@
 Pipeline {
-    agent none
+    agent { label 'JDK_17' }
     triggers { pollSCM('H/10 * * * *') }
     stages {
         stage('vcn') {
