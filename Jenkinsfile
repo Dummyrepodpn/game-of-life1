@@ -4,8 +4,7 @@ Pipeline {
     stages {
         stage('vcn') {
             steps {
-                git url: 'https://github.com/wakaleo/game-of-life.git',
-                    branch: 'declarative'
+                git url: 'https://github.com/wakaleo/game-of-life.git'
             }
         }
         stage('build') {
